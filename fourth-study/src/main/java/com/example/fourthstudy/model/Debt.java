@@ -20,9 +20,14 @@ public class Debt {
 
     private Long remainingDebt;
 
+    @Column(name="creation_date",nullable = false)
+    private LocalDateTime creationDate;
+
     @Column(name="due_date",nullable = false)
     private LocalDateTime dueDate;
 
+    @Transient
+    private Long lateFee;
 
 
 }
