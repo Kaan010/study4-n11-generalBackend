@@ -31,8 +31,8 @@ public class UserService {
 
         Optional<User> userOptional = userDao.findById(userId);
         userOptional.ifPresent(
-                newUser->{
-                    newUser.setName(user.getName());
+                updatedUser->{
+                    updatedUser.setName(user.getName());
                 }
         );
         return userOptional.orElse(new User());

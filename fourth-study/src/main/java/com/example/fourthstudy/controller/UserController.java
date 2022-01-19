@@ -1,6 +1,5 @@
 package com.example.fourthstudy.controller;
 
-import com.example.fourthstudy.dto.UserDto;
 import com.example.fourthstudy.model.User;
 import com.example.fourthstudy.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -39,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateFolksdev(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         return new ResponseEntity<>(
                 userService.updateUser(id,user),
                 HttpStatus.OK
@@ -47,7 +46,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteFolksdev(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(
                 HttpStatus.OK

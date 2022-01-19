@@ -14,8 +14,6 @@ public class Debt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private DebtType debtType;
-
     private Long mainDebt;
 
     private Long remainingDebt;
@@ -26,8 +24,12 @@ public class Debt {
     @Column(name="due_date",nullable = false)
     private LocalDateTime dueDate;
 
+    @Column(name="user_id",nullable = false)
+    private Long userId;
+
     @Transient
     private Long lateFee;
+
 
 
 }
