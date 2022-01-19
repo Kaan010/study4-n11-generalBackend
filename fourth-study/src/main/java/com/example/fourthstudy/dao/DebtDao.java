@@ -21,4 +21,5 @@ public interface DebtDao extends JpaRepository<Debt, Long> {
 
     List<Debt> findAllByUserIdAndRemainingDebtGreaterThan(Long userId, Long remainingDebt);
 
+
 }

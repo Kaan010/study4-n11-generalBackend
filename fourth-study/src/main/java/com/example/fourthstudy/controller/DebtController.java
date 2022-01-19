@@ -33,6 +33,7 @@ public class DebtController {
                 HttpStatus.OK);
     }
 
+    //3.d. Belirtilen tarihler arasında oluşturulan borçlar listelenebilmelidir.
     @GetMapping(value = "fetch/{first_date}/{last_date}")
     public ResponseEntity<?> getDebtsBetweenDates(@PathVariable(value = "first_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime fromDate,
                                                  @PathVariable(value = "last_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime toDate) {
@@ -41,13 +42,15 @@ public class DebtController {
                 HttpStatus.OK);
     }
 
+    //3.g. Bir kullanıcının toplam borç tutarını dönen bir servis olmaldıır.
     @GetMapping(value = "user/{id}}")
     public ResponseEntity<?> getAllDebtsOfAUser(@PathVariable Long id) {
         return new ResponseEntity<>(
-                debtService.getAllDebtsOfAUser(id),
+                debtService.getTotalDebtOfAUser(id),
                 HttpStatus.OK);
     }
 
+    //3.e. Bir kullanıcının tüm borçları listenelebilmelidir. (Borç tutarı sıfırdan büyük olanlar)
     @GetMapping(value = "user/nonpaid/{id}}")
     public ResponseEntity<?> getNonPaidDebtsOfAUser(@PathVariable Long id) {
         return new ResponseEntity<>(
@@ -55,6 +58,7 @@ public class DebtController {
                 HttpStatus.OK);
     }
 
+    //3.f. Bir kullanıcının vadesi geçmiş borçları listenelebilmelidir. (Borç tutarı sıfırdan büyük olanlar)
     @GetMapping(value = "user/nonpaid/{id}/{due_date}")
     public ResponseEntity<?> getNonPaidDebtsOfAUserPassedDueDate(@PathVariable Long id,
                                                           @PathVariable(value = "due_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dueDate) {
@@ -63,6 +67,23 @@ public class DebtController {
                 HttpStatus.OK);
     }
 
+    //3.h. Bir kullanıcının vadesi geçmiş toplam borç tutarını dönen bir servis olmaldıır.
+    @GetMapping(value = "user/{id}/nonpaid/total/{due_date}")
+    public ResponseEntity<?> getTotalDebtOfAUserPassedDueDate(@PathVariable Long id,
+                                                                 @PathVariable(value = "due_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dueDate) {
+        return new ResponseEntity<>(
+                debtService.getTotalDebtOfAUserPassedDueDate(id,dueDate),
+                HttpStatus.OK);
+    }
+
+    //3.i. Bir kullanıcının anlık gecikme zammı tutarını dönen bir servis olmalıdır.
+    //(Vadesi geçen borçlara hesaplanan gecikme zamı tutarları toplamı. (Sadece gecikme zammı))
+    @GetMapping(value = "latefee/user/{id}")
+    public ResponseEntity<?> getLateFeeOfUser(@PathVariable Long id) {
+        return new ResponseEntity<>(
+                debtService.calculateLateFeeOfUser(id),
+                HttpStatus.OK);
+    }
 
 
     @PostMapping
@@ -81,7 +102,7 @@ public class DebtController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteFolksdev(@PathVariable Long id) {
+    public ResponseEntity<?> deleteDebt(@PathVariable Long id) {
         debtService.deleteDebt(id);
         return new ResponseEntity<>(
                 HttpStatus.OK

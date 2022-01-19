@@ -14,8 +14,10 @@ public class Debt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="main_debt",nullable = false)
     private Long mainDebt;
 
+    @Column(name="remaining_debt",nullable = false)
     private Long remainingDebt;
 
     @Column(name="creation_date",nullable = false)
