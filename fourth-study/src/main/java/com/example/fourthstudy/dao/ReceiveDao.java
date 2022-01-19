@@ -4,6 +4,7 @@ import com.example.fourthstudy.model.Debt;
 import com.example.fourthstudy.model.Receive;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -15,5 +16,5 @@ public interface ReceiveDao extends JpaRepository<Receive,Long> {
     List<Receive> findAllByUserId(Long userId);
 
     @Query(nativeQuery = true, value = "select * from Receive r where r.operation_time between :startDate and :endDate")
-    List<Debt> getReceives_between(LocalDateTime fromDate, LocalDateTime toDate);
+    List<Debt> getReceives_between(@Param("startDate") LocalDateTime date, @Param("endDate") LocalDateTime date2);
 }

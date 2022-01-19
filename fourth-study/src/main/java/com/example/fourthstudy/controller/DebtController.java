@@ -43,7 +43,7 @@ public class DebtController {
     }
 
     //3.g. Bir kullanıcının toplam borç tutarını dönen bir servis olmaldıır.
-    @GetMapping(value = "user/{id}}")
+    @GetMapping(value = "user/{id}")
     public ResponseEntity<?> getAllDebtsOfAUser(@PathVariable Long id) {
         return new ResponseEntity<>(
                 debtService.getTotalDebtOfAUser(id),
@@ -51,7 +51,7 @@ public class DebtController {
     }
 
     //3.e. Bir kullanıcının tüm borçları listenelebilmelidir. (Borç tutarı sıfırdan büyük olanlar)
-    @GetMapping(value = "user/nonpaid/{id}}")
+    @GetMapping(value = "user/nonpaid/{id}")
     public ResponseEntity<?> getNonPaidDebtsOfAUser(@PathVariable Long id) {
         return new ResponseEntity<>(
                 debtService.getNonPaidDebtsofAUser(id),
