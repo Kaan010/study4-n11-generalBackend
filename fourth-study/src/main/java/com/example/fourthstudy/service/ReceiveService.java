@@ -18,6 +18,8 @@ import java.util.List;
 public class ReceiveService {
     public final ReceiveDao receiveDao;
     public final DebtService debtService;
+    public static LocalDateTime localDateTime= LocalDateTime.of(2018,1,1,0,0);
+
 
     public Receive createReceipt(Debt deb) {
         Receive receive = new Receive();
@@ -30,12 +32,8 @@ public class ReceiveService {
 
         if(deb.getDueDate().isBefore(LocalDateTime.now()))
             createLateFeeOfDebt(deb);
-
         return receiveDao.saveAndFlush(receive);
-
     }
-    public static LocalDateTime localDateTime= LocalDateTime.of(2018,1,1,0,0);
-
 
     private Receive createLateFeeOfDebt(Debt deb){
         Receive receive = new Receive();
@@ -67,5 +65,9 @@ public class ReceiveService {
 
     public List<Receive> getAllReceivesOfUser(Long id){
         return receiveDao.findAllByUserId(id);
+    }
+
+    public List<Debt> findReceivesBetweenDates(LocalDateTime fromDate,LocalDateTime toDate){
+        return receiveDao.getReceives_between(fromDate,toDate);
     }
 }
