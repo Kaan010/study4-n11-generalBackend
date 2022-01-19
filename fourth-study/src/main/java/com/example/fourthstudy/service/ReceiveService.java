@@ -46,8 +46,7 @@ public class ReceiveService {
         receive.setOperationTime(LocalDateTime.now());
         receive.setUserId(deb.getUserId());
 
-        receive.setMainDebt(calculateLateFee(deb, receive));
-
+        receive.setMainDebt(calculateLateFee(deb));
         return receiveDao.saveAndFlush(receive);
 
     }
