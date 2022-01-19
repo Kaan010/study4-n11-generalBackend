@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/v1/debt")
@@ -34,17 +34,32 @@ public class DebtController {
     }
 
     @GetMapping(value = "fetch/{first_date}/{last_date}")
-    public ResponseEntity<?> getDebtsBetweenDates(@PathVariable(value = "first_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
-                                                 @PathVariable(value = "last_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) {
+    public ResponseEntity<?> getDebtsBetweenDates(@PathVariable(value = "first_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime fromDate,
+                                                 @PathVariable(value = "last_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime toDate) {
         return new ResponseEntity<>(
                 debtService.findDebtsBetweenDates(fromDate,toDate),
                 HttpStatus.OK);
     }
 
     @GetMapping(value = "user/{id}}")
-    public ResponseEntity<?> getDebtsOfAUser(@PathVariable Long id) {
+    public ResponseEntity<?> getAllDebtsOfAUser(@PathVariable Long id) {
         return new ResponseEntity<>(
-                debtService.getDebtsOfAUser(id),
+                debtService.getAllDebtsOfAUser(id),
+                HttpStatus.OK);
+    }
+
+    @GetMapping(value = "user/nonpaid/{id}}")
+    public ResponseEntity<?> getNonPaidDebtsOfAUser(@PathVariable Long id) {
+        return new ResponseEntity<>(
+                debtService.getNonPaidDebtsofAUser(id),
+                HttpStatus.OK);
+    }
+
+    @GetMapping(value = "user/nonpaid/{id}/{due_date}")
+    public ResponseEntity<?> getNonPaidDebtsOfAUserPassedDueDate(@PathVariable Long id,
+                                                          @PathVariable(value = "due_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dueDate) {
+        return new ResponseEntity<>(
+                debtService.getNonPaidDebtsOfAUserPassedDueDate(id,dueDate),
                 HttpStatus.OK);
     }
 

@@ -2,12 +2,11 @@ package com.example.fourthstudy.service;
 
 import com.example.fourthstudy.dao.DebtDao;
 import com.example.fourthstudy.model.Debt;
-import com.example.fourthstudy.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,12 +46,21 @@ public class DebtService {
         debtDao.deleteById(id);
     }
 
-    public List<Debt> findDebtsBetweenDates(LocalDate fromDate,LocalDate toDate){
+    public List<Debt> findDebtsBetweenDates(LocalDateTime fromDate,LocalDateTime toDate){
         return debtDao.getDebts_between(fromDate,toDate);
     }
 
-    public List<Debt> getDebtsOfAUser(Long id){
+    public List<Debt> getAllDebtsOfAUser(Long id){
         return debtDao.findAllByUserId(id);
     }
+
+    public List<Debt> getNonPaidDebtsOfAUserPassedDueDate(Long id, LocalDateTime dueDate) {
+        return debtDao.findAllByUserIdAndDueDateAfterAndRemainingDebtGreaterThan(id,dueDate,0L);
+    }
+
+    public List<Debt> getNonPaidDebtsofAUser(Long id){
+        return debtDao.findAllByUserIdAndRemainingDebtGreaterThan(id,0L);
+    }
+
 
 }
